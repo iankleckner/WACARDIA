@@ -1,0 +1,226 @@
+Ian Kleckner, PhD, MPHIan.Kleckner@gmail.com
+Physiological Tasks Starter
+Version	v.2020.01.24
+
+Timestamp	24-Jan-2020 11:24:54
+
+Participant Information
+PP_Number	999.000000	** Number in the study (1, 2, 3, ...)
+Timepoint	1.000000	** 1, 2, or 3
+
+Shimmer Connection
+Use_ECG	1.000000	** Acquire ECG data
+COM_ECG	7.000000	COM port for Shimmer with ECG
+Sampling_rate_ECG_Hz	256.000000	Sampling rate for ECG in Hz for NON-HBD tasks
+Use_EDA	0.000000	** Acquire EDA data
+COM_EDA	40.000000	COM port for Shimmer with EDA
+Sampling_rate_EDA_Hz	32.000000	Sampling rate for EDA in Hz
+
+ECG R Spike Detection
+Minimum_RR_Interval_sec	0.500000	Minimum duration between consecutive ECG R spikes (sec)
+Minimum_R_Prominence_mV	1.000000	** Minimum height of ECG R spike(mV)
+
+View and Record Shimmer
+Event_name	Test	** Name of the event (Test, 6MWT, Biodex)
+Plot_update_period_sec	0.500000	Time between plot updates (sec)
+Plot_viewable_duration_sec	15.000000	Visible region of plot (sec)
+Test_duration_sec	Inf	Duration of test (sec)
+Write_data_to_file	1.000000	Write Shimmer data to text file
+
+Heartbeat Detection
+Number_of_trials_HBD	3.000000	Number of trials
+Sampling_rate_ECG_HBD_Hz	1024.000000	Sampling rate for ECG in Hz for HBD only
+TrainingMode	0.000000	Present Knowledge of Results (KOR) after each trial
+ShowProgress	1.000000	Show PP their progress at 25%, 50%, and 75% done
+
+Advanced Display
+SpeedMode	0.000000	Skip program instructions for rapid execution (debugging)
+
+Display
+FullScreenMode	1.000000	Display in full-screen mode
+WindowPixels_Width	1200.000000	Width of screen (if not fullscreen; Pixels)
+WindowPixels_Height	800.000000	Height of screen (if not fullscreen; Pixels)
+HideMousePointer	1.000000	Hide the mouse pointer
+MinBorderPercent	1.000000	Percent window width or height (smaller of the two) for IMAGE border (1-49%)
+SetSyncTest_StDev	1.000000	MacOS=ON, Manually set VBL SyncTest max standard deviation (below)
+VBL_MaxStd_ms	5.000000	Maximum allowable stdev in monitor refresh interval (5 ms for "relaxed" to fix issue on Mac)
+newStream = 
+
+
+mt19937ar random stream
+             Seed: 213458
+  NormalTransform: Ziggurat
+
+
+
+___________________________________________________________
+
+
+Attempting to connect to Shimmer, this may take 10 sec...
+Firmware version LogAndStream v0.11.0 Detected for Shimmer COM7
+Battery Voltage: 3996[mV]
+Real Time Clock on Shimmer: 24-Jan-2020 11:25:00.
+
+
+Successfully connected to Shimmer device!
+setsamplingrate - Shimmer Sampling Rate is set to 256Hz
+setsamplingrate - ExG Rate is set to 500Hz
+setsamplingrate - WR Accel Rate is set to 400Hz
+setsamplingrate - Gyro Rate is set to 258.0645Hz.
+setsamplingrate - Mag Rate is set to 220.00Hz
+PTB-INFO: Using modified PortAudio V19.6.0-devel, revision unknown
+[Warning: Using latency on Windows machine] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('HeartbeatTracking_expt_Shimmer', 'C:\Users\ikleckner\Desktop\2020.01.24-HBD_Software\2020.01.24-HBD_Software\HB_Tasks+Shimmer--2020.01.21\HeartbeatTracking_expt_Shimmer.m', 220)" style="font-weight:bold">HeartbeatTracking_expt_Shimmer</a> (<a href="matlab: opentoline('C:\Users\ikleckner\Desktop\2020.01.24-HBD_Software\2020.01.24-HBD_Software\HB_Tasks+Shimmer--2020.01.21\HeartbeatTracking_expt_Shimmer.m',220,0)">line 220</a>)
+  In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('Task_Starter>button_GO_Callback', 'C:\Users\ikleckner\Desktop\2020.01.24-HBD_Software\2020.01.24-HBD_Software\HB_Tasks+Shimmer--2020.01.21\Task_Starter.m', 288)" style="font-weight:bold">Task_Starter>button_GO_Callback</a> (<a href="matlab: opentoline('C:\Users\ikleckner\Desktop\2020.01.24-HBD_Software\2020.01.24-HBD_Software\HB_Tasks+Shimmer--2020.01.21\Task_Starter.m',288,0)">line 288</a>)
+  In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('gui_mainfcn', 'C:\Program Files\MATLAB\R2017a\toolbox\matlab\guide\gui_mainfcn.m', 95)" style="font-weight:bold">gui_mainfcn</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2017a\toolbox\matlab\guide\gui_mainfcn.m',95,0)">line 95</a>)
+  In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('Task_Starter', 'C:\Users\ikleckner\Desktop\2020.01.24-HBD_Software\2020.01.24-HBD_Software\HB_Tasks+Shimmer--2020.01.21\Task_Starter.m', 66)" style="font-weight:bold">Task_Starter</a> (<a href="matlab: opentoline('C:\Users\ikleckner\Desktop\2020.01.24-HBD_Software\2020.01.24-HBD_Software\HB_Tasks+Shimmer--2020.01.21\Task_Starter.m',66,0)">line 66</a>)
+  In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('matlab.graphics.internal.figfile.FigFile/read>@(hObject,eventdata)Task_Starter(''button_GO_Callback'',hObject,eventdata,guidata(hObject))')" style="font-weight:bold">matlab.graphics.internal.figfile.FigFile/read>@(hObject,eventdata)Task_Starter('button_GO_Callback',hObject,eventdata,guidata(hObject))</a>] 
+PTB-INFO: New audio device -1 with handle 0 opened as PortAudio stream:
+PTB-INFO: For 1 channels Playback: Audio subsystem is MME, Audio device name is Speakers (Intel® Smart Sound Te
+PTB-INFO: Real samplerate 48000.000000 Hz. Input latency 0.000000 msecs, Output latency 100.333333 msecs.
+
+Test presentation of delay 100.000000 msec was late by 25.874983 msec[Warning: Using latency on Windows machine] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('HeartbeatTracking_expt_Shimmer', 'C:\Users\ikleckner\Desktop\2020.01.24-HBD_Software\2020.01.24-HBD_Software\HB_Tasks+Shimmer--2020.01.21\HeartbeatTracking_expt_Shimmer.m', 256)" style="font-weight:bold">HeartbeatTracking_expt_Shimmer</a> (<a href="matlab: opentoline('C:\Users\ikleckner\Desktop\2020.01.24-HBD_Software\2020.01.24-HBD_Software\HB_Tasks+Shimmer--2020.01.21\HeartbeatTracking_expt_Shimmer.m',256,0)">line 256</a>)
+  In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('Task_Starter>button_GO_Callback', 'C:\Users\ikleckner\Desktop\2020.01.24-HBD_Software\2020.01.24-HBD_Software\HB_Tasks+Shimmer--2020.01.21\Task_Starter.m', 288)" style="font-weight:bold">Task_Starter>button_GO_Callback</a> (<a href="matlab: opentoline('C:\Users\ikleckner\Desktop\2020.01.24-HBD_Software\2020.01.24-HBD_Software\HB_Tasks+Shimmer--2020.01.21\Task_Starter.m',288,0)">line 288</a>)
+  In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('gui_mainfcn', 'C:\Program Files\MATLAB\R2017a\toolbox\matlab\guide\gui_mainfcn.m', 95)" style="font-weight:bold">gui_mainfcn</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2017a\toolbox\matlab\guide\gui_mainfcn.m',95,0)">line 95</a>)
+  In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('Task_Starter', 'C:\Users\ikleckner\Desktop\2020.01.24-HBD_Software\2020.01.24-HBD_Software\HB_Tasks+Shimmer--2020.01.21\Task_Starter.m', 66)" style="font-weight:bold">Task_Starter</a> (<a href="matlab: opentoline('C:\Users\ikleckner\Desktop\2020.01.24-HBD_Software\2020.01.24-HBD_Software\HB_Tasks+Shimmer--2020.01.21\Task_Starter.m',66,0)">line 66</a>)
+  In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('matlab.graphics.internal.figfile.FigFile/read>@(hObject,eventdata)Task_Starter(''button_GO_Callback'',hObject,eventdata,guidata(hObject))')" style="font-weight:bold">matlab.graphics.internal.figfile.FigFile/read>@(hObject,eventdata)Task_Starter('button_GO_Callback',hObject,eventdata,guidata(hObject))</a>] 
+PTB-INFO: New audio device -1 with handle 1 opened as PortAudio stream:
+PTB-INFO: For 1 channels Playback: Audio subsystem is MME, Audio device name is Speakers (Intel® Smart Sound Te
+PTB-INFO: Real samplerate 48000.000000 Hz. Input latency 0.000000 msecs, Output latency 100.333333 msecs.
+
+
+_____________________________________
+Setting up display 1 [24-Jan-2020 11:25:09]
+Adding window rectangle as follows:
+
+!! Sync test settings manually set to 5.000000 msec
+This determines time resolution of presentation
+Creating window on screen 0
+
+PTB-INFO: This is Psychtoolbox-3 for Microsoft Windows, under Matlab 64-Bit (Version 3.0.15 - Build date: Feb  7 2019).
+PTB-INFO: Support status on this operating system release: Windows 10 (Version 10.0) supported and tested to some limited degree.
+PTB-INFO: Type 'PsychtoolboxVersion' for more detailed version information.
+PTB-INFO: Most parts of the Psychtoolbox distribution are licensed to you under terms of the MIT License, with
+PTB-INFO: some restrictions. See file 'License.txt' in the Psychtoolbox root folder for the exact licensing conditions.
+
+PTB-INFO: The detected endline of the vertical blank interval is equal or lower than the startline. This indicates
+PTB-INFO: that i couldn't detect the duration of the vertical blank interval and won't be able to correct timestamps
+PTB-INFO: for it. This will introduce a very small and constant offset (typically << 1 msec). Read 'help BeampositionQueries'
+PTB-INFO: for how to correct this, should you really require that last few microseconds of precision.
+PTB-INFO: Btw. this can also mean that your systems beamposition queries are slightly broken. It may help timing precision to
+PTB-INFO: enable the beamposition workaround, as explained in 'help ConserveVRAMSettings', section 'kPsychUseBeampositionQueryWorkaround'.
+
+
+PTB-INFO: OpenGL-Renderer is Intel :: Intel(R) HD Graphics 5500 :: 4.4.0 - Build 20.19.15.4835
+PTB-INFO: VBL startline = 1800 , VBL Endline = 1800
+PTB-INFO: Measured monitor refresh interval from beamposition = 17.353190 ms [57.626293 Hz].
+PTB-INFO: Will use beamposition query for accurate Flip time stamping.
+PTB-INFO: Measured monitor refresh interval from VBLsync = 16.668292 ms [59.994149 Hz]. (50 valid samples taken, stddev=1.253461 ms.)
+PTB-INFO: Reported monitor refresh interval from operating system = 16.666667 ms [60.000000 Hz].
+PTB-INFO: Small deviations between reported values are normal and no reason to worry.
+PTB-INFO: ==============================================================================================================================
+PTB-INFO: WINDOWS DWM DESKTOP COMPOSITOR IS ACTIVE. On this Windows-10 or later system, Psychtoolbox can no longer reliably detect if
+PTB-INFO: this will cause trouble for timing and integrity of visual stimuli or not. You might be just fine, or you could be in trouble.
+PTB-INFO: Use external measurement equipment and independent procedures to verify reliability of timing if you care about proper timing.
+PTB-INFO: ==============================================================================================================================
+PTB-INFO: Psychtoolbox imaging pipeline starting up for window with requested imagingmode 1025 ...
+PTB-INFO: Will use 8 bits per color component framebuffer for stimulus drawing.
+PTB-INFO: Will use 8 bits per color component framebuffer for stimulus post-processing (if any).
+
+
+_____________________________________
+Setting up display 1 [24-Jan-2020 11:25:13]
+Adding window rectangle as follows:
+
+!! Sync test settings manually set to 5.000000 msec
+This determines time resolution of presentation
+Creating window on screen 0PTB-INFO: The detected endline of the vertical blank interval is equal or lower than the startline. This indicates
+PTB-INFO: that i couldn't detect the duration of the vertical blank interval and won't be able to correct timestamps
+PTB-INFO: for it. This will introduce a very small and constant offset (typically << 1 msec). Read 'help BeampositionQueries'
+PTB-INFO: for how to correct this, should you really require that last few microseconds of precision.
+PTB-INFO: Btw. this can also mean that your systems beamposition queries are slightly broken. It may help timing precision to
+PTB-INFO: enable the beamposition workaround, as explained in 'help ConserveVRAMSettings', section 'kPsychUseBeampositionQueryWorkaround'.
+
+
+PTB-INFO: OpenGL-Renderer is Intel :: Intel(R) HD Graphics 5500 :: 4.4.0 - Build 20.19.15.4835
+PTB-INFO: VBL startline = 1800 , VBL Endline = 1800
+PTB-INFO: Measured monitor refresh interval from beamposition = 17.352194 ms [57.629600 Hz].
+PTB-INFO: Will use beamposition query for accurate Flip time stamping.
+PTB-INFO: Measured monitor refresh interval from VBLsync = 16.673748 ms [59.974518 Hz]. (50 valid samples taken, stddev=0.901309 ms.)
+PTB-INFO: Reported monitor refresh interval from operating system = 16.666667 ms [60.000000 Hz].
+PTB-INFO: Small deviations between reported values are normal and no reason to worry.
+PTB-INFO: ==============================================================================================================================
+PTB-INFO: WINDOWS DWM DESKTOP COMPOSITOR IS ACTIVE. On this Windows-10 or later system, Psychtoolbox can no longer reliably detect if
+PTB-INFO: this will cause trouble for timing and integrity of visual stimuli or not. You might be just fine, or you could be in trouble.
+PTB-INFO: Use external measurement equipment and independent procedures to verify reliability of timing if you care about proper timing.
+PTB-INFO: ==============================================================================================================================
+PTB-INFO: Psychtoolbox imaging pipeline starting up for window with requested imagingmode 1025 ...
+PTB-INFO: Will use 8 bits per color component framebuffer for stimulus drawing.
+PTB-INFO: Will use 8 bits per color component framebuffer for stimulus post-processing (if any).
+
+Trial 1 / 3
+	Delay	25.000000
+Ready...set...GOSTOPPTB-DEBUG: DrawText: Failed to load external drawtext plugin [Unknown error].
+PTB-INFO: DrawText: Failed to load external drawtext plugin 'libptbdrawtext_ftgl64.dll'. Reverting to legacy GDI text renderer. 'help DrawTextPlugin' for troubleshooting.
+INFO: Initial invocation of the PsychHID mex file failed.
+INFO: Most likely a required DLL is not installed in your system, e.g., libusb-1.0.dll
+INFO: I will now check if this is the culprit and work around it. To avoid future warnings,
+INFO: please copy the 64-Bit libusb-1.0.dll from the PsychContributed\x64 folder into your C:\WINDOWS\system32\ 
+INFO: folder or a similarly appropriate place. You can get a fresher copy of libusb-1.0.dll from 
+INFO: http://libusb.org/wiki/windows_backend if you want to stay up to date.
+INFO: Retrying now, may fail...
+
+	Confidence	0.000000	in	9.521803 sec
+Trial 2 / 3
+	Delay	35.000000{Operation terminated by user during <a href="matlab:matlab.internal.language.introspective.errorDocCallback('KbCheck', 'C:\toolbox\Psychtoolbox\PsychBasic\KbCheck.m', 264)" style="font-weight:bold">KbCheck</a> (<a href="matlab: opentoline('C:\toolbox\Psychtoolbox\PsychBasic\KbCheck.m',264,0)">line 264</a>)
+
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('DisplaySession/displayCurrentStep')" style="font-weight:bold">DisplaySession/displayCurrentStep</a>
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('DisplaySession/nextStepDisplay', 'C:\Users\ikleckner\Desktop\2020.01.24-HBD_Software\2020.01.24-HBD_Software\HB_Tasks+Shimmer--2020.01.21\DisplaySession.m', 1396)" style="font-weight:bold">DisplaySession/nextStepDisplay</a> (<a href="matlab: opentoline('C:\Users\ikleckner\Desktop\2020.01.24-HBD_Software\2020.01.24-HBD_Software\HB_Tasks+Shimmer--2020.01.21\DisplaySession.m',1396,0)">line 1396</a>)
+                obj.displayCurrentStep();
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('HeartbeatTracking_expt_Shimmer', 'C:\Users\ikleckner\Desktop\2020.01.24-HBD_Software\2020.01.24-HBD_Software\HB_Tasks+Shimmer--2020.01.21\HeartbeatTracking_expt_Shimmer.m', 476)" style="font-weight:bold">HeartbeatTracking_expt_Shimmer</a> (<a href="matlab: opentoline('C:\Users\ikleckner\Desktop\2020.01.24-HBD_Software\2020.01.24-HBD_Software\HB_Tasks+Shimmer--2020.01.21\HeartbeatTracking_expt_Shimmer.m',476,0)">line 476</a>)
+        DS.nextStepDisplay();
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('Task_Starter>button_GO_Callback', 'C:\Users\ikleckner\Desktop\2020.01.24-HBD_Software\2020.01.24-HBD_Software\HB_Tasks+Shimmer--2020.01.21\Task_Starter.m', 288)" style="font-weight:bold">Task_Starter>button_GO_Callback</a> (<a href="matlab: opentoline('C:\Users\ikleckner\Desktop\2020.01.24-HBD_Software\2020.01.24-HBD_Software\HB_Tasks+Shimmer--2020.01.21\Task_Starter.m',288,0)">line 288</a>)
+eval( sprintf( '%s( table_dataStructure )', taskName ) )
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('gui_mainfcn', 'C:\Program Files\MATLAB\R2017a\toolbox\matlab\guide\gui_mainfcn.m', 95)" style="font-weight:bold">gui_mainfcn</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2017a\toolbox\matlab\guide\gui_mainfcn.m',95,0)">line 95</a>)
+        feval(varargin{:});
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('Task_Starter', 'C:\Users\ikleckner\Desktop\2020.01.24-HBD_Software\2020.01.24-HBD_Software\HB_Tasks+Shimmer--2020.01.21\Task_Starter.m', 66)" style="font-weight:bold">Task_Starter</a> (<a href="matlab: opentoline('C:\Users\ikleckner\Desktop\2020.01.24-HBD_Software\2020.01.24-HBD_Software\HB_Tasks+Shimmer--2020.01.21\Task_Starter.m',66,0)">line 66</a>)
+    gui_mainfcn(gui_State, varargin{:});
+
+In
+<a href="matlab:matlab.internal.language.introspective.errorDocCallback('matlab.graphics.internal.figfile.FigFile/read>@(hObject,eventdata)Task_Starter(''button_GO_Callback'',hObject,eventdata,guidata(hObject))')" style="font-weight:bold">matlab.graphics.internal.figfile.FigFile/read>@(hObject,eventdata)Task_Starter('button_GO_Callback',hObject,eventdata,guidata(hObject))</a>} 
+Interrupt while evaluating UIControl Callback.
+
+clear all
+
+
+PTB-INFO: There are still 32 textures, offscreen windows or proxy windows open. Screen('CloseAll') will auto-close them.
+PTB-INFO: This may be fine for studies where you only use a few textures or windows, but a large number of open
+PTB-INFO: textures or offscreen windows can be an indication that you forgot to dispose no longer needed items
+PTB-INFO: via a proper call to Screen('Close', [windowOrTextureIndex]); , e.g., at the end of each trial. These
+PTB-INFO: stale objects linger around and can consume significant memory ressources, causing degraded performance,
+PTB-INFO: timing trouble (if the system has to resort to disk paging) and ultimately out of memory conditions or
+PTB-INFO: crashes. Please check your code. (Screen('Close') is a quick way to release all textures and offscreen windows)
+
+
+
+INFO: PTB's Screen('Flip', 11) command seems to have missed the requested stimulus presentation deadline
+INFO: a total of 100 times out of a total of 506 flips during this session.
+
+INFO: This number is fairly accurate (and indicative of real timing problems in your own code or your system)
+INFO: if you provided requested stimulus onset times with the 'when' argument of Screen('Flip', window [, when]);
+INFO: If you called Screen('Flip', window); without the 'when' argument, this count is more of a ''mild'' indicator
+INFO: of timing behaviour than a hard reliable measurement. Large numbers may indicate problems and should at least
+INFO: deserve your closer attention. Cfe. 'help SyncTrouble', the FAQ section at www.psychtoolbox.org and the
+INFO: examples in the PDF presentation in PsychDocumentation/Psychtoolbox3-Slides.pdf for more info and timing tips.
+
+
+Closed 0 figures
+edit HeartbeatDetection_expt_Shimmer.m
+exit

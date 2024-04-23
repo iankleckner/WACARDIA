@@ -1,0 +1,65 @@
+Ian Kleckner, PhD, MPHIan.Kleckner@gmail.com
+Physiological Tasks Starter
+Version	v.2020.01.24
+
+Timestamp	24-Jan-2020 11:22:40
+
+Participant Information
+PP_Number	999.000000	** Number in the study (1, 2, 3, ...)
+Timepoint	1.000000	** 1, 2, or 3
+
+Shimmer Connection
+Use_ECG	1.000000	** Acquire ECG data
+COM_ECG	7.000000	COM port for Shimmer with ECG
+Sampling_rate_ECG_Hz	256.000000	Sampling rate for ECG in Hz for NON-HBD tasks
+Use_EDA	0.000000	** Acquire EDA data
+COM_EDA	40.000000	COM port for Shimmer with EDA
+Sampling_rate_EDA_Hz	32.000000	Sampling rate for EDA in Hz
+
+ECG R Spike Detection
+Minimum_RR_Interval_sec	0.500000	Minimum duration between consecutive ECG R spikes (sec)
+Minimum_R_Prominence_mV	1.000000	** Minimum height of ECG R spike(mV)
+
+View and Record Shimmer
+Event_name	Test	** Name of the event (Test, 6MWT, Biodex)
+Plot_update_period_sec	0.500000	Time between plot updates (sec)
+Plot_viewable_duration_sec	15.000000	Visible region of plot (sec)
+Test_duration_sec	Inf	Duration of test (sec)
+Write_data_to_file	1.000000	Write Shimmer data to text file
+
+Heartbeat Detection
+Number_of_trials_HBD	3.000000	Number of trials
+Sampling_rate_ECG_HBD_Hz	1024.000000	Sampling rate for ECG in Hz for HBD only
+TrainingMode	0.000000	Present Knowledge of Results (KOR) after each trial
+ShowProgress	1.000000	Show PP their progress at 25%, 50%, and 75% done
+
+Advanced Display
+SpeedMode	0.000000	Skip program instructions for rapid execution (debugging)
+
+Display
+FullScreenMode	1.000000	Display in full-screen mode
+WindowPixels_Width	1200.000000	Width of screen (if not fullscreen; Pixels)
+WindowPixels_Height	800.000000	Height of screen (if not fullscreen; Pixels)
+HideMousePointer	1.000000	Hide the mouse pointer
+MinBorderPercent	1.000000	Percent window width or height (smaller of the two) for IMAGE border (1-49%)
+SetSyncTest_StDev	1.000000	MacOS=ON, Manually set VBL SyncTest max standard deviation (below)
+VBL_MaxStd_ms	5.000000	Maximum allowable stdev in monitor refresh interval (5 ms for "relaxed" to fix issue on Mac)
+
+
+
+TrialNum	Attempt	TrialDelay(sec)	TrialIsCoincident	UserResponse	ResponseTime(sec)	UserIsCorrect	Confidence(0_to_1)	ConfidenceRT(sec)
+1	1	0.500000	0	1	1.202279	0	0.500000	0.193205
+2	1	0.200000	1	1	0.748696	1	0.500000	0.209956
+3	1	0.200000	1	1	3.822906	1	0.500000	0.454953
+
+Basic Results
+NumTrials	3
+FractionCorrect	0.666667
+
+Signal Detection Results
+NumHits	2
+NumMisses	0
+NumFalseAlarms	1
+NumCorrectRejections	0
+
+HBD - task duration: 1.25 min
