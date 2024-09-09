@@ -13,6 +13,8 @@ Please cite our work using our published manuscript (hopefully soon!) or the pre
 
 https://doi.org/10.22541/au.171679424.44691529/v1
 
+For more resources please visit http://wacardia.iankleckner.com
+
 Cheers,
 
 -Ian
