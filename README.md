@@ -3,21 +3,15 @@ Associate Professor
 University of Maryland Baltimore
 Baltimore, MD, USA
 
-2024/04/10
-
+2024/09/09
 _______________________________________________________
 
 
-Thank you for your interest in this software. I hope you find it helpful.
+Thank you for your interest in WACARDIA. I hope you find it helpful and good luck with your research!
 
-A few ground rules:
+Please cite our work using our published manuscript (hopefully soon!) or the pre-print here:
 
-* Please do not distribute this software without permission of Dr. Kleckner and the Univeristy of Rochester.
-* If others are intersted, please have them contact ian.kleckner@umaryland.edu directly.
-* Please sign and return the license agreement to Dr. Kleckner (if you have not done so already).
-* Please adhere to the licensing agreement.
-
-Thank you and good luck wtih your research!
+https://doi.org/10.22541/au.171679424.44691529/v1
 
 Cheers,
 
@@ -27,7 +21,7 @@ ________________________________________________________
 
 Files
 
-WACARDIA-2024.04.10
+WACARDIA
 	MATLAB code for running the heartbeat detection tasks
 	
 Standard operating procedures (SOP) for running this tasks
