@@ -1,7 +1,8 @@
 % Ian Kleckner
 % ian.kleckner@gmail.com
 % Cancer Control Division
-% University of Rochester Medical Center
+% University of Rochester Medical Center 2015-2021
+% University of Maryland Baltimore after 2021-
 %
 % Interoception / Affect Study launcher program
 %
@@ -20,6 +21,7 @@
 % 2013/05/20 Update for new Interoception/Affect study
 % 2016/12/23 Update for Kleckner R25 Pilot at URMC
 % 2019/06/19 Update for Kleckner K07 study at URMC
+% 2024/09/01 Jacob Chung - Update to include Bluetooth_Lag_Measurement
 
 
 function varargout = Task_Starter(varargin)
@@ -89,21 +91,24 @@ guidata(hObject, handles);
 set(handles.popupmenu_task, 'String', ...
     { 'View_and_Record_Shimmer', ...      
       'HeartbeatTracking_expt_Shimmer', ...
-      'HeartbeatDetection_expt_Shimmer'} ...
+      'HeartbeatDetection_expt_Shimmer', ...
+      'Bluetooth_Lag_Detection'} ...
     );
 
 %% Input specs table
 SoftwareTitle   = 'WACARDIA';
-SoftwareVersion = 'v.2024.04.10';
+SoftwareVersion = 'v.2024.09.11';
 
-% Commit the software title to the GUI
+filename_logo = 'WACARDIA_Logo-White.png';
+
+% Commit the software  title to the GUI
 set(handles.text_title, 'String', SoftwareTitle);
 set(handles.GUI_task_starter, 'Name', sprintf('[%s]',SoftwareTitle));
 setappdata(handles.GUI_task_starter, 'SoftwareTitle', SoftwareTitle);
 
 % Commit the software version to the GUI and save it for future use
 setappdata(handles.GUI_task_starter, 'SoftwareVersion', SoftwareVersion);
-set(handles.text_version, 'String', sprintf('(C) Ian Kleckner, URMC\n%s ', SoftwareVersion));
+set(handles.text_version, 'String', sprintf('(C) Ian Kleckner\n%s ', SoftwareVersion));
 
 specsTable = DynamicTable(handles.table_input_specs);
 % Syntax for table
@@ -116,7 +121,7 @@ specsTable.addRow('HEADING', 'Participant Information', NaN, '', NaN, NaN);
 
 specsTable.addRow('HEADING', 'Shimmer Connection', NaN, '', NaN, NaN);
     specsTable.addRow('BOOLEAN', 'Use_ECG', true, '** Acquire ECG data', false, true);    
-    specsTable.addRow('NUMERIC', 'COM_ECG', 7, 'COM port for Shimmer with ECG', 0, Inf);
+    specsTable.addRow('NUMERIC', 'COM_ECG', 18, 'COM port for Shimmer with ECG', 0, Inf);
     specsTable.addRow('NUMERIC', 'Sampling_rate_ECG_Hz', 256, 'Sampling rate for ECG in Hz for NON-HBD tasks', 0, Inf);
     
     specsTable.addRow('BOOLEAN', 'Use_EDA', false, '** Acquire EDA data', false, true);    
@@ -125,7 +130,7 @@ specsTable.addRow('HEADING', 'Shimmer Connection', NaN, '', NaN, NaN);
 
 specsTable.addRow('HEADING', 'ECG R Spike Detection', NaN, '', NaN, NaN);
     specsTable.addRow('NUMERIC', 'Minimum_RR_Interval_sec', 0.5, 'Minimum duration between consecutive ECG R spikes (sec)', 0, Inf);
-    specsTable.addRow('NUMERIC', 'Minimum_R_Prominence_mV', 0.2, '** Minimum height of ECG R spike(mV)', 0, Inf);
+    specsTable.addRow('NUMERIC', 'Minimum_R_Prominence_mV', 1, '** Minimum height of ECG R spike(mV)', 0, Inf);
 
 specsTable.addRow('HEADING', 'View and Record Shimmer', NaN, '', NaN, NaN);
     specsTable.addRow('STRING', 'Event_name', 'Test', '** Name of the event (Test, 6MWT, Biodex)', NaN, NaN);
@@ -137,35 +142,43 @@ specsTable.addRow('HEADING', 'View and Record Shimmer', NaN, '', NaN, NaN);
 specsTable.addRow('HEADING', 'Heartbeat Detection', NaN, '', NaN, NaN);
     specsTable.addRow('NUMERIC', 'Number_of_trials_HBD', 25, 'Number of trials', 1, Inf);
     specsTable.addRow('NUMERIC', 'Sampling_rate_ECG_HBD_Hz', 1024, 'Sampling rate for ECG in Hz for HBD only', 0, Inf);    
-    specsTable.addRow('BOOLEAN', 'TrainingMode', false, 'Present Knowledge of Results (KOR) after each trial', false, true);    
+    specsTable.addRow('BOOLEAN', 'TrainingMode', true, 'Present Knowledge of Results (KOR) after each trial', false, true);    
     specsTable.addRow('BOOLEAN', 'ShowProgress', true, 'Show PP their progress at 25%, 50%, and 75% done', false, true);
+    specsTable.addRow('BOOLEAN', 'UseInstructionWindows', false, 'Use visuals in a separate window for participant instructions', false, true);
+    specsTable.addRow('NUMERIC', 'ShimmerLag', 50, 'Accounts for bluetooth delay, around 50 ms (output from bluetooth lag measurement program)', 0, Inf);
     
 specsTable.addRow('HEADING', 'Advanced Display', NaN, '', NaN, NaN);
     specsTable.addRow('BOOLEAN', 'SpeedMode', false, 'Skip program instructions for rapid execution (debugging)', false, true);
 
 specsTable.addRow('HEADING', 'Display', NaN, '', NaN, NaN);    
     specsTable.addRow('BOOLEAN', 'FullScreenMode', true, 'Display in full-screen mode', false, true);
-        specsTable.addRow('NUMERIC', 'WindowPixels_Width', 1200, 'Width of screen (if not fullscreen; Pixels)', 1, Inf);
-        specsTable.addRow('NUMERIC', 'WindowPixels_Height', 800, 'Height of screen (if not fullscreen; Pixels)', 1, Inf);    
-    specsTable.addRow('BOOLEAN', 'HideMousePointer', true, 'Hide the mouse pointer', false, true);
-    specsTable.addRow('NUMERIC', 'MinBorderPercent', 1, 'Percent window width or height (smaller of the two) for IMAGE border (1-49%)', 1, 49);    
-
-    
-if( ismac )
+    specsTable.addRow('NUMERIC', 'WindowPixels_Width', 1200, 'Width of screen (if not fullscreen; Pixels)', 1, Inf);
+    specsTable.addRow('NUMERIC', 'WindowPixels_Height', 800, 'Height of screen (if not fullscreen; Pixels)', 1, Inf);    
+    specsTable.addRow('BOOLEAN', 'HideMousePointer', false, 'Hide the mouse pointer', false, true);
+    specsTable.addRow('NUMERIC', 'MinBorderPercent', 1, 'Percent window width or height (smaller of the two) for IMAGE border (1-49%)', 1, 49); 
     SYNCTEST_DEFAULT = true;
-else
-    %SYNCTEST_DEFAULT = false;
-    SYNCTEST_DEFAULT = true;
-end
-
-specsTable.addRow('BOOLEAN', 'SetSyncTest_StDev', SYNCTEST_DEFAULT, 'MacOS=ON, Manually set VBL SyncTest max standard deviation (below)', false, true);
+    specsTable.addRow('BOOLEAN', 'SetSyncTest_StDev', SYNCTEST_DEFAULT, 'MacOS=ON, Manually set VBL SyncTest max standard deviation (below)', false, true);
     specsTable.addRow('NUMERIC', 'VBL_MaxStd_ms', 5, 'Maximum allowable stdev in monitor refresh interval (5 ms for "relaxed" to fix issue on Mac)', 0.0001, Inf);
+
+specsTable.addRow('HEADING', 'Bluetooth Lag Detection', NaN, '', NaN, NaN);
+    specsTable.addRow('NUMERIC', 'COM_Arduino', 19, 'COM port for the Arduino', 0, Inf);
+    specsTable.addRow('NUMERIC', 'Arduino_output_pin', 12, 'Arduino pin connected to the Shimmer', 0, Inf);
+    specsTable.addRow('NUMERIC', 'Sampling_rate_ECG_Lag_Hz', 1024, 'Sampling rate for ECG in Hz for Lag Measurement only', 1, Inf);
+    specsTable.addRow('NUMERIC', 'Number_of_Arduino_switches', 200, 'Number of Arduino switches (~0.5 seconds added per switch)', 1, Inf);
+    specsTable.addRow('NUMERIC', 'Approximate_Voltage_mV', 10, 'Approximate voltage delivered by the Arduino (Should be wired for ~10 mV)', 1, Inf);
+   
 
 specsTable.displayTable();
 setappdata(handles.GUI_task_starter, 'specsTable', specsTable);
 
 % Current directory (to address a bug)
 setappdata(handles.GUI_task_starter, 'currentDirectory', pwd);
+
+
+
+%img_logo = imread(filename_logo);
+%axes_logo = get(handles.axes_logo);
+%imshow(img_logo, 'Parent', axes_logo);
 
 clc;
 refresh_display( handles )
@@ -239,6 +252,7 @@ if( specsTable.getValue('SetSyncTest_StDev') )
 else
     specsTable.setVisibility('VBL_MaxStd_ms', false);
 end
+
 
 
 % Display the contents of the table
