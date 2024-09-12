@@ -23,6 +23,7 @@
 %2023/07/10 Minor edits to comments
 %           Beep index output corrected
 %           Sections reworked to match flowchart
+%2024/9/3 Jacob Chung - Updated to account for bluetooth lag
 
 function HeartbeatDetection_expt_Shimmer( experiment_specs )
 
@@ -38,7 +39,13 @@ function HeartbeatDetection_expt_Shimmer( experiment_specs )
     
     % Read in COM port and format it as a string
     comPort_ECG = sprintf('%d', experiment_specs.COM_ECG);
+
+    % Offset to account for bluetooth lag (from Bluetooth Lag Detection program)
+    shimmer_lag_sec = experiment_specs.ShimmerLag / 1e3;
     
+    % Use Psychtoolox window for instructions, etc.
+    USE_PTB_WINDOW = experiment_specs.UseInstructionWindows;
+
     % Sample rate in [Hz]
     sampling_rate_ECG_Hz = experiment_specs.Sampling_rate_ECG_HBD_Hz;
 
@@ -50,7 +57,7 @@ function HeartbeatDetection_expt_Shimmer( experiment_specs )
 
     HideMousePointer        = experiment_specs.HideMousePointer;
     MinBorderPercent        = experiment_specs.MinBorderPercent;
-    FullScreenMode          = experiment_specs.FullScreenMode;    
+    FullScreenMode          = experiment_specs.FullScreenMode;
 
     % OTHER INPUT
     
@@ -65,9 +72,6 @@ function HeartbeatDetection_expt_Shimmer( experiment_specs )
     key_shift                       = KbName('LeftShift');
     key_esc                         = KbName('ESCAPE');
     KbDevice_Number                 = -1;
-    
-    % Use Psychtoolox window for instructions, etc.
-    USE_PTB_WINDOW = false;
     
     % 2019/06/14 First practice trial is synchronous
     USE_PRACTICE_TRIAL_SYNCHRONOUS = true;
@@ -86,7 +90,7 @@ function HeartbeatDetection_expt_Shimmer( experiment_specs )
     end
     
     % Extra debugging output for detecting R spikes
-    OUTPUT_DEBUG = false;
+    OUTPUT_DEBUG = true;
     
     %----------------------------------------------------------------------
     % HBD Task Options
@@ -583,7 +587,7 @@ function HeartbeatDetection_expt_Shimmer( experiment_specs )
         end
         %            ||||||||||||||||||||||||||||||||||
         
-        % Reset sampling bufer for first heartbeat
+        % Reset sampling buffer for first heartbeat
         sampling_buffer_first_HB_sec = 0.1;
         
         % Have not yet delivered the dummy beep (not a beep). This is to
@@ -594,7 +598,8 @@ function HeartbeatDetection_expt_Shimmer( experiment_specs )
         %           |||||||| OUTPUT TRIAL INFORMATION ||||||||
         if( USE_PRACTICE_TRIAL_SYNCHRONOUS )       
             delay_HB_msec       = 1000 * delay_HB_coincident_sec;
-            delay_HB_sec        = delay_HB_coincident_sec;
+            delay_HB_sec        = delay_HB_coincident_sec - shimmer_lag_sec;
+
             trialIsCoincident   = true;
             
             fprintf('\n\n---------------------------------------------------');
@@ -603,9 +608,9 @@ function HeartbeatDetection_expt_Shimmer( experiment_specs )
             fprintf('\n\n** PRESS SHIFT + ESC TO END THE BEEPING');
             
         else        
-            % Obtain information about trial
+            % Assign the delay time of the trial and account for lag
             delay_HB_msec       = 1000 * delay_HB_sec_array(t);
-            delay_HB_sec        = delay_HB_sec_array(t);
+            delay_HB_sec        = delay_HB_sec_array(t) - shimmer_lag_sec;
             trialIsCoincident   = trialIsCoincident_array(t);
             
             % Output to console
@@ -618,6 +623,10 @@ function HeartbeatDetection_expt_Shimmer( experiment_specs )
             else
                 fprintf('\nTrial is NOT COINCIDENT');
             end
+        end
+
+        if (delay_HB_sec < 0)
+            delay_HB_sec = delay_HB_sec + shimmer_lag_sec - 0.05;
         end
         %            |||||||||||||||||||||||||||||||||||||||
         
@@ -961,7 +970,8 @@ function HeartbeatDetection_expt_Shimmer( experiment_specs )
                                         fprintf('\nPRE Packet arrival (GetSecs time): %0.3f', time_current_packet_arrival_pre_GetSecs);
                                         fprintf('\nPOST Packet arrival (GetSecs time): %0.3f', time_current_packet_arrival_post_GetSecs);
                                         fprintf('\nTime from packet start to most recent peak (sec): %0.3f', time_from_packet_start_to_peak_sec);
-                                        fprintf('\nHB delay (sec): %0.3f', delay_HB_sec);
+                                        fprintf('\nHB delay, excluding lag (sec): %0.3f', delay_HB_sec + shimmer_lag_sec);
+                                        fprintf('\nShimmer lag offset (sec): %0.3f', shimmer_lag_sec);
                                         fprintf('\nTime of intended beep (GetSecs): %0.3f', time_beep_intended_sec);
                                         current_time_GetSecs = GetSecs();
                                         fprintf('\nCurrent time (GetSecs): %0.3f', current_time_GetSecs);
@@ -1297,7 +1307,7 @@ function HeartbeatDetection_expt_Shimmer( experiment_specs )
             plot(X_time_detected_peak_sec_array, Y_ECG_detected_peak_mV_array, 'or');
 
             % Plot beep times
-            plot(X_time_detected_peak_sec_array + delay_HB_sec + X_time_beep_late_sec_array, Y_ECG_detected_peak_mV_array, 'sb');
+            plot(X_time_detected_peak_sec_array + delay_HB_sec + shimmer_lag_sec + X_time_beep_late_sec_array, Y_ECG_detected_peak_mV_array, 'sb');
 
             get(hfig, 'YLim');
 
