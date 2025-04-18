@@ -8,8 +8,9 @@
 %  PsychToolbox
 %  MATLAB Support Package for Arduino Hardware
 %
-% 2024/7/21 Start coding
-% 2024/9/10 Initial version of program complete
+% 2024/07/21 Start coding
+% 2024/09/10 Initial version of program complete
+% 2025/04/18 IK small update to report how long the program will run for
 
 function Bluetooth_Lag_Detection (experiment_specs)
 
@@ -140,7 +141,9 @@ function Bluetooth_Lag_Detection (experiment_specs)
     % Start saving contents of command window to log file
     diary( sprintf('%s/diary.txt', output_dir) );
     
-    fprintf('\n\n** Press any key to start the program\n\n');
+    fprintf('\n\nPut the Shimmer in the place where it will be during the actual HBD task');
+    fprintf('\nHold all the equipment still while the program runs');
+    fprintf('\nPress any key to start the program\n\n');
     
     % Release all keys
     while KbCheck; end
@@ -156,6 +159,8 @@ function Bluetooth_Lag_Detection (experiment_specs)
     fprintf('\nWaiting for keyboard keys to be released...');
     while KbCheck; end
     fprintf('done');
+
+    fprintf('\n\nPerforming %d switches, should take approximately %0.1f minutes', nSignalSwitches, 2 * nSignalSwitches * signal_duration_sec / 60)
     
     shimmer.start;
     
@@ -453,17 +458,17 @@ function Bluetooth_Lag_Detection (experiment_specs)
     
     % Display statistics
     fprintf('\n\nSTATISTICAL OUTPUT\n')
-    fprintf('Number of Signal Switches: %d\n]n', nSignalSwitches)
+    fprintf('Number of Signal Switches: %d\n', nSignalSwitches)
     fprintf('Average Lag ***USE THIS NUMBER IN HBD PROGRAM***: %.1f msec\n', mean_value);
-    fprintf(['HOW TO INTERPRET Average Lag: \nLess than 20 ms: Excellent\n' ...
+    fprintf(['\nHOW TO INTERPRET Average Lag: \nLess than 20 ms: Excellent\n' ...
         '20 to 50 ms: Good\n50 to 100 ms: Acceptable\n100 to 150 ms: Concerning,' ...
         'probably acceptable\nGreater than 150 ms: Unacceptable\n\n'])
 
     % Warns users if average lag is too high
     if(ci_lower95 > 50 || mean_value > 100)
-        fprintf(['\nWARNING: An interval of over 50 ms is concerning, and more than 100 ms ' ...
-            'is unacceptable. If the lag is significantly more than 100 ms, it may be due to ' ...
-            'high levels of noise. Fix the experimental setup and run the program again\n']);
+        fprintf(['\n\nWARNING: An interval of over 50 ms is concerning, and more than 100 ms ' ...
+            'is unacceptable. \n\nIf the lag is significantly more than 100 ms, it may be due to ' ...
+            'high levels of noise. \n\tFix the experimental setup and run the program again\n']);
     end
 
     %fprintf('Standard Deviation: %.5f msec\n', std_value);
